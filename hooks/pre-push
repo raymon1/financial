@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+// tslint:disable
+require('child_process').exec("git branch | grep '*'", function(err, stdout) {
+  if (err) {
+    process.abort();
+  } else {
+    var name = stdout.replace('* ', '').replace('\n', '');
+
+    // if (name === 'master' || name === 'develop') {
+    //   console.log('\x1b[31m', "Please don't push to master or develop directly", '\x1b[0m');
+    //   process.exit(-1);
+    // }
+  }
+});
+
+console.log(
+  'You can',
+  '\x1b[1m',
+  'skip',
+  '\x1b[0m',
+  'the pre-push hook by running "git push --no-verify" instead',
+  '\x1b[1m',
+  'but don\'t!',
+  '\x1b[0m'
+);
+
+console.log('\x1b[36m%s\x1b[0m', 'Running tests, please wait...', '\x1b[0m');
+require('child_process').exec('(cargo test)',
+  function(err, stdout) {
+    console.log('Output: ' + stdout);
+    if (err) {
+      console.log(err);
+      console.log('Failed to build or one or more test failed');
+      process.exit(-1);
+    } else {
+      console.log('\x1b[36m%s\x1b[0m', 'Tests succeeded!', '\x1b[0m');
+    }
+});
