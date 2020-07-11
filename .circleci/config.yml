@@ -8,32 +8,17 @@ executors:
       - image: rust:1
 
 jobs: 
-  log_tools:
-    steps:
-      - run:
-          name: rust/rustup/cargo Version information
-          command: |
-            rustup --version
-            rustc --version
-            cargo --version
-  
   build:
     steps:
       - checkout
-      - run:
-          name: build crate in release mode
-          command: cargo build --release
-
+      - run: cargo build --release
   test:
     steps:
-      - run:
-          name: test crate
-          command: cargo test --release
+      - checkout
+      - run: cargo test --release
 
 workflows:
-  build:
-    # Run the welcome/run job in its own container
+  build_and_test:
     jobs:
       - build
-      - test: 
-          requires: build
+      - test
