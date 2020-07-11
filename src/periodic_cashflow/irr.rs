@@ -1,18 +1,24 @@
-use crate::common::utils;
+use crate::common::{utils, find_root::find_root};
+use crate::periodic_cashflow::npv::npv;
 
 /// calculates the internal rate of return for a series of cash flows occurring at regular interval represented by the numbers in values.
+///
+/// # Example
+/// ```
+/// let cf = [-500., 100., 100., 100., 100.];
+/// let guess = Some(0.);
+/// let cf_irr = financial::irr(&cf, &guess); 
+/// ```
 pub fn irr(values: &[f64], guess: &Option<f64>) -> Result<f64, &'static str> {
     let values = utils::trim_zeros(&values);
 
-    let len = values.len();
-    let zeros = values.iter().filter(|x| **x == 0.).count();
-    let negatives = values.iter().filter(|x| x.is_sign_negative()).count();
-
-    if len < 2 || zeros + negatives == len {
-        return Err("cashflow must contain more than one value, and include positive and negative values");
+    match utils::validate_cashflow_values(values)  {
+        Err(x) => return Err(x),
+        Ok(()) => {},
     }
     
-    match utils::find_root(&values, &guess) {
+    let f_npv = |x: f64| npv(&x, values);
+    match find_root(&guess, f_npv) {
         Some(ans) => Ok(ans),
         None => Err("could't find irr for the values provided")
     }
@@ -21,13 +27,14 @@ pub fn irr(values: &[f64], guess: &Option<f64>) -> Result<f64, &'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::common::PRECISION;
 
     #[test]
     fn irr_works() {
         let cf = [-500., 100., 100., 100., 100.];
         let guess = Some(0.);
-        let accuracy = (irr(&cf, &guess).unwrap() - -0.08364541746615000000000000000000).abs();
-        assert!(accuracy <= utils::ACCURACY, format!("exceeded IRR accuracy threshold, {}", accuracy));
+        let precision = (irr(&cf, &guess).unwrap() - -0.08364541746615000000000000000000).abs();
+        assert!(precision <= PRECISION, format!("exceeded IRR precision threshold, {}", precision));
     }
 
     #[test]
@@ -36,5 +43,4 @@ mod tests {
         let guess = Some(0.);
         assert_eq!(irr(&cf, &guess).unwrap(), 0.0);
     }
-
 }
