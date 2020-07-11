@@ -1,7 +1,7 @@
 //! # Financial
 //!
 //! `Financial` is a collection of finance calculations mimicking some of Excel Financial Functions interface.
-//! ## What is different than other financial Rust cargos?
+//! ## What is different than other financial Rust crates?
 //!
 //! It supports both periodic and scheduled computation for [IRR](https://en.wikipedia.org/wiki/Internal_rate_of_return) and [NPV](https://en.wikipedia.org/wiki/Net_present_value).
 //!

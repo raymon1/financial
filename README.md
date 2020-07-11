@@ -1,10 +1,13 @@
 # Financial [![CircleCI](https://circleci.com/gh/raymon1/financial.svg?style=shield)](https://app.circleci.com/pipelines/github/raymon1/financial)
 
 `Financial` is a [Rust](https://www.rust-lang.org/) crate that contains collection of finance calculations mimicking some of [Excel Financial Functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8) interface.
+you can find the crate [here](https://docs.rs/crate/financial)
 
-## What is different than other financial Rust cargos?
+## What is different than other financial crates?
 
 It supports both periodic and scheduled computation for [IRR](https://en.wikipedia.org/wiki/Internal_rate_of_return) and [NPV](https://en.wikipedia.org/wiki/Net_present_value).
+
+IRR and NPV functions should be faster since powers are pre-computed iteratively instead of using power function multiple times.
 
 ## Supported Functions
 

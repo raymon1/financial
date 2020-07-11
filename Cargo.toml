@@ -3,7 +3,7 @@ name = "financial"
 version = "1.0.1"
 authors = ["Raymon Mina <raymonmina@gmail.com>"]
 edition = "2018"
-description = "A collection of finance calculations memicking some of Excel Financial Functions interface"
+description = "A collection of finance calculations mimicking some of Excel Financial Functions interface"
 license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
