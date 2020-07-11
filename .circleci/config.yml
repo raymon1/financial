@@ -8,11 +8,15 @@ executors:
       - image: rust:1
 
 jobs: 
-  build:
+  build:    
+    docker:
+      - image: rust:1
     steps:
       - checkout
       - run: cargo build --release
   test:
+    docker:
+      - image: rust:1
     steps:
       - checkout
       - run: cargo test --release
