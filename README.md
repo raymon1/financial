@@ -1,6 +1,6 @@
 # Financial
 
-`Financial` is a [Rust](https://www.rust-lang.org/) crate that contains collection of finance calculations memicking some of [Excel Financial Functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8) interface.
+`Financial` is a [Rust](https://www.rust-lang.org/) crate that contains collection of finance calculations mimicking some of [Excel Financial Functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8) interface.
 
 ## What is different than other financial Rust cargos?
 
