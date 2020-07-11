@@ -1,0 +1,37 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+executors:
+  default:
+    description: Executor environment for building Rust crates.
+    docker:
+      - image: rust:1
+
+commands: 
+  log_tools:
+    - run:
+      name: rust/rustup/cargo Version information
+      command: |
+        rustup --version
+        rustc --version
+        cargo --version
+  
+  build:
+    - run:
+      name: build crate in release mode
+      command: cargo build --release
+
+  test:
+    - run:
+      name: test crate
+      command: cargo test --release
+
+# Orchestrate or schedule a set of jobs
+workflows:
+  # Name the workflow "welcome"
+  build:
+    # Run the welcome/run job in its own container
+    jobs:
+      - build
+      - test: 
+          requires: build
