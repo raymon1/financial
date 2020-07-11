@@ -7,7 +7,7 @@ executors:
     docker:
       - image: rust:1
 
-commands: 
+jobs: 
   log_tools:
     steps:
       - run:
@@ -30,9 +30,7 @@ commands:
           name: test crate
           command: cargo test --release
 
-# Orchestrate or schedule a set of jobs
 workflows:
-  # Name the workflow "welcome"
   build:
     # Run the welcome/run job in its own container
     jobs:
