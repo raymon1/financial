@@ -4,8 +4,10 @@
 
 mod common;
 mod periodic_cashflow;
+mod scheduled_cashflow;
 
 pub use crate::periodic_cashflow::irr::irr;
 pub use crate::periodic_cashflow::fv::fv;
 pub use crate::periodic_cashflow::pv::pv;
 pub use crate::periodic_cashflow::npv::npv;
+pub use crate::scheduled_cashflow::xnpv::xnpv;
