@@ -1,4 +1,4 @@
-# Financial
+# Financial [![CircleCI](https://circleci.com/gh/raymon1/financial.svg?style=shield)](https://app.circleci.com/pipelines/github/raymon1/financial)
 
 `Financial` is a [Rust](https://www.rust-lang.org/) crate that contains collection of finance calculations mimicking some of [Excel Financial Functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8) interface.
 
