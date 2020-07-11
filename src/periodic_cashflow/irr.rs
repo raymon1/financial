@@ -1,7 +1,7 @@
 use crate::common::{utils, find_root::find_root};
 use crate::periodic_cashflow::npv::npv;
 
-/// calculates the internal rate of return for a series of cash flows occurring at regular interval represented by the numbers in values.
+/// Calculates the internal rate of return for a series of cash flows occurring at regular interval represented by the numbers in values.
 ///
 /// # Example
 /// ```

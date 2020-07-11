@@ -3,7 +3,7 @@ use crate::common::find_root::find_root;
 use crate::scheduled_cashflow::xnpv::calculate_xnpv;
 use crate::scheduled_cashflow::CheckedCashflowSchedule;
 
-///
+/// Returns the internal rate of return for a schedule of cash flows that is not necessarily periodic
 /// 
 /// # Example
 /// ``` 
