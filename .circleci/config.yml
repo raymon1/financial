@@ -9,22 +9,26 @@ executors:
 
 commands: 
   log_tools:
-    - run:
-      name: rust/rustup/cargo Version information
-      command: |
-        rustup --version
-        rustc --version
-        cargo --version
+    steps:
+      - run:
+          name: rust/rustup/cargo Version information
+          command: |
+            rustup --version
+            rustc --version
+            cargo --version
   
   build:
-    - run:
-      name: build crate in release mode
-      command: cargo build --release
+    steps:
+      - checkout
+      - run:
+          name: build crate in release mode
+          command: cargo build --release
 
   test:
-    - run:
-      name: test crate
-      command: cargo test --release
+    steps:
+      - run:
+          name: test crate
+          command: cargo test --release
 
 # Orchestrate or schedule a set of jobs
 workflows:
