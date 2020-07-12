@@ -1,5 +1,5 @@
 //! # Financial
-//!
+//! 
 //! `Financial` is a collection of finance calculations mimicking some of Excel Financial Functions interface.
 //! ## What is different than other financial Rust crates?
 //!

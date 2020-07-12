@@ -4,6 +4,13 @@ version = "1.0.1"
 authors = ["Raymon Mina <raymonmina@gmail.com>"]
 edition = "2018"
 description = "A collection of finance calculations mimicking some of Excel Financial Functions interface"
+keywords = ["finance", "financial", "money", "NPV", "IRR", "present value"]
+categories = ["Mathematics"]
+documentation = "https://docs.rs/financial/"
+homepage = "https://github.com/raymon1/financial"
+repository = "https://github.com/raymon1/financial"
+readme = "README.md"
+
 license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
