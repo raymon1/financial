@@ -7,9 +7,9 @@ use crate::periodic_cashflow::npv::npv;
 /// ```
 /// let cf = [-500., 100., 100., 100., 100.];
 /// let guess = Some(0.);
-/// let cf_irr = financial::irr(&cf, &guess);
+/// let cf_irr = financial::irr(&cf, guess);
 /// ```
-pub fn irr(values: &[f64], guess: &Option<f64>) -> Result<f64, &'static str> {
+pub fn irr(values: &[f64], guess: Option<f64>) -> Result<f64, &'static str> {
     let values = utils::trim_zeros(&values);
 
     match utils::validate_cashflow_values(values) {
@@ -17,8 +17,8 @@ pub fn irr(values: &[f64], guess: &Option<f64>) -> Result<f64, &'static str> {
         Ok(()) => {}
     }
 
-    let f_npv = |x: f64| npv(&x, values);
-    match find_root(&guess, f_npv) {
+    let f_npv = |x: f64| npv(x, values);
+    match find_root(guess, f_npv) {
         Some(ans) => Ok(ans),
         None => Err("could't find irr for the values provided"),
     }
@@ -33,7 +33,7 @@ mod tests {
     fn irr_works() {
         let cf = [-500., 100., 100., 100., 100.];
         let guess = Some(0.);
-        let precision = (irr(&cf, &guess).unwrap() - -0.08364541746615000000000000000000).abs();
+        let precision = (irr(&cf, guess).unwrap() - -0.08364541746615000000000000000000).abs();
         assert!(
             precision <= PRECISION,
             format!("exceeded IRR precision threshold, {}", precision)
@@ -44,6 +44,6 @@ mod tests {
     fn irr_works_2() {
         let cf = [-500., 100., 100., 100., 100., 100.];
         let guess = Some(0.);
-        assert_eq!(irr(&cf, &guess).unwrap(), 0.0);
+        assert_eq!(irr(&cf, guess).unwrap(), 0.0);
     }
 }

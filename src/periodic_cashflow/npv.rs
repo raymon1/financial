@@ -7,16 +7,16 @@ use crate::common::utils;
 /// # Examples
 ///
 /// ```
-/// let npv = financial::npv(&0.1, &[-1000., 500., 500., 500.]);
+/// let npv = financial::npv(0.1, &[-1000., 500., 500., 500.]);
 /// assert_eq!(npv, 221.29635953828267);
 /// ```
 // pre calculating powers for performance
-pub fn npv(rate: &f64, values: &[f64]) -> f64 {
-    if *rate == 0.0 {
+pub fn npv(rate: f64, values: &[f64]) -> f64 {
+    if rate == 0.0 {
         return values.iter().sum();
     }
 
-    utils::powers(&(1. + rate), &values.len(), false)
+    utils::powers(1. + rate, values.len(), false)
         .iter()
         .zip(values.iter())
         .map(|(p, v)| v / *p)
@@ -33,7 +33,7 @@ mod tests {
     #[test]
     fn npv_with_zero_rate() {
         let x: [f64; 10000] = [100.; 10000];
-        assert_eq!(npv(&0., &x), x.iter().sum());
+        assert_eq!(npv(0., &x), x.iter().sum());
     }
 
     // used for benchmarking
@@ -48,7 +48,7 @@ mod tests {
     fn npv_returns_same_as_npv_slow() {
         let cf = [-1000., 100., 100., 100.];
         let rate = 0.1;
-        assert_eq!(npv(&rate, &cf), npv_slow(&rate, &cf));
+        assert_eq!(npv(rate, &cf), npv_slow(&rate, &cf));
     }
 
     // commenting benchmarking as it's included in the nightly build only

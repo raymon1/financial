@@ -17,12 +17,12 @@ use chrono::{DateTime, TimeZone};
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
 /// ];
-/// assert!((financial::xirr(&cf, &dates, &None).unwrap() - 0.10004608364).abs() < 1e-7);  
+/// assert!((financial::xirr(&cf, &dates, None).unwrap() - 0.10004608364).abs() < 1e-7);  
 /// ```
 pub fn xirr<T: TimeZone>(
     values: &[f64],
     dates: &[DateTime<T>],
-    guess: &Option<f64>,
+    guess: Option<f64>,
 ) -> Result<f64, &'static str> {
     let cf = CheckedCashflowSchedule::new(values, dates);
 
@@ -30,7 +30,7 @@ pub fn xirr<T: TimeZone>(
         Err(m) => Err(m),
         Ok(cf) => {
             let f_xnpv = |x: f64| calculate_xnpv(&x, &cf);
-            match find_root(&guess, f_xnpv) {
+            match find_root(guess, f_xnpv) {
                 Some(ans) => Ok(ans),
                 None => Err("could't find irr for the values provided"),
             }
@@ -54,7 +54,7 @@ mod tests {
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
         ];
-        assert_eq!(xirr(&cf, &dates, &None).unwrap(), 0.);
+        assert_eq!(xirr(&cf, &dates, None).unwrap(), 0.);
     }
 
     #[test]
@@ -69,7 +69,7 @@ mod tests {
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
         ];
         assert!(
-            (xirr(&cf, &dates, &None).unwrap() - 0.10004608364551086) < crate::common::PRECISION
+            (xirr(&cf, &dates, None).unwrap() - 0.10004608364551086) < crate::common::PRECISION
         );
     }
 }

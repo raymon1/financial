@@ -1,8 +1,8 @@
-pub fn powers(base: &f64, n: &usize, start_from_zero: bool) -> Vec<f64> {
+pub fn powers(base: f64, n: usize, start_from_zero: bool) -> Vec<f64> {
     let start = if start_from_zero { 0 } else { 1 };
-    let p0 = if start_from_zero { 1. } else { *base };
+    let p0 = if start_from_zero { 1. } else { base };
 
-    (start..*n).fold(vec![p0], |mut pows, _| {
+    (start..n).fold(vec![p0], |mut pows, _| {
         pows.push(pows.last().unwrap() * (base));
         pows
     })
