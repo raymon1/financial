@@ -1,4 +1,4 @@
-use crate::common::{utils, find_root::find_root};
+use crate::common::{find_root::find_root, utils};
 use crate::periodic_cashflow::npv::npv;
 
 /// Calculates the internal rate of return for a series of cash flows occurring at regular interval represented by the numbers in values.
@@ -7,20 +7,20 @@ use crate::periodic_cashflow::npv::npv;
 /// ```
 /// let cf = [-500., 100., 100., 100., 100.];
 /// let guess = Some(0.);
-/// let cf_irr = financial::irr(&cf, &guess); 
+/// let cf_irr = financial::irr(&cf, &guess);
 /// ```
 pub fn irr(values: &[f64], guess: &Option<f64>) -> Result<f64, &'static str> {
     let values = utils::trim_zeros(&values);
 
-    match utils::validate_cashflow_values(values)  {
+    match utils::validate_cashflow_values(values) {
         Err(x) => return Err(x),
-        Ok(()) => {},
+        Ok(()) => {}
     }
-    
+
     let f_npv = |x: f64| npv(&x, values);
     match find_root(&guess, f_npv) {
         Some(ans) => Ok(ans),
-        None => Err("could't find irr for the values provided")
+        None => Err("could't find irr for the values provided"),
     }
 }
 
@@ -34,7 +34,10 @@ mod tests {
         let cf = [-500., 100., 100., 100., 100.];
         let guess = Some(0.);
         let precision = (irr(&cf, &guess).unwrap() - -0.08364541746615000000000000000000).abs();
-        assert!(precision <= PRECISION, format!("exceeded IRR precision threshold, {}", precision));
+        assert!(
+            precision <= PRECISION,
+            format!("exceeded IRR precision threshold, {}", precision)
+        );
     }
 
     #[test]

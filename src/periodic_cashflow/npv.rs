@@ -3,7 +3,7 @@ use crate::common::utils;
 
 /// Calculates the net present value of an investment by using a discount rate and a series of future payments
 /// (negative values) and income (positive values).
-/// 
+///
 /// # Examples
 ///
 /// ```
@@ -14,44 +14,42 @@ use crate::common::utils;
 pub fn npv(rate: &f64, values: &[f64]) -> f64 {
     if *rate == 0.0 {
         return values.iter().sum();
-    } 
+    }
 
     utils::powers(&(1. + rate), &values.len(), false)
-    .iter()
-    .zip(values.iter())
-    .map(|(p, v)| { v / *p })
-    .sum()
+        .iter()
+        .zip(values.iter())
+        .map(|(p, v)| v / *p)
+        .sum()
 }
-
 
 // extern crate test;
 
 #[cfg(test)]
 mod tests {
     use super::*;
-//    use test::Bencher;
+    //    use test::Bencher;
 
     #[test]
     fn npv_with_zero_rate() {
         let x: [f64; 10000] = [100.; 10000];
-        assert_eq!(npv(&0., &x), x.iter().sum());        
+        assert_eq!(npv(&0., &x), x.iter().sum());
     }
 
     // used for benchmarking
     fn npv_slow(rate: &f64, values: &[f64]) -> f64 {
         (0..values.len())
-        .zip(values.iter())
-        .map(|(n, v)| { v / f64::powf(1.0 + rate, 1. + n as f64) })
-        .sum()
+            .zip(values.iter())
+            .map(|(n, v)| v / f64::powf(1.0 + rate, 1. + n as f64))
+            .sum()
     }
 
     #[test]
-    fn npv_returns_same_as_npv_slow () {
+    fn npv_returns_same_as_npv_slow() {
         let cf = [-1000., 100., 100., 100.];
         let rate = 0.1;
         assert_eq!(npv(&rate, &cf), npv_slow(&rate, &cf));
     }
-
 
     // commenting benchmarking as it's included in the nightly build only
     // #[bench]

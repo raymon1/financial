@@ -1,9 +1,9 @@
-use chrono::{DateTime, offset::TimeZone};
 use crate::common::utils;
 use crate::scheduled_cashflow::CheckedCashflowSchedule;
+use chrono::{offset::TimeZone, DateTime};
 
 /// Returns the net present value for a schedule of cash flows that is not necessarily periodic.
-/// 
+///
 /// # Example
 /// ```
 /// use chrono::{NaiveDate, DateTime, Utc, Duration};
@@ -14,15 +14,19 @@ use crate::scheduled_cashflow::CheckedCashflowSchedule;
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc), 
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
 /// ];
 /// assert_eq!(financial::xnpv(&0.1, &cf, &dates).unwrap(), -120.9553674519204);    
 /// ```
-pub fn xnpv<T: TimeZone>(rate: &f64, values: &[f64], dates: &[DateTime<T>]) -> Result<f64, &'static str> {
+pub fn xnpv<T: TimeZone>(
+    rate: &f64,
+    values: &[f64],
+    dates: &[DateTime<T>],
+) -> Result<f64, &'static str> {
     let cf = CheckedCashflowSchedule::new(values, dates);
     match cf {
         Err(m) => Err(m),
-        Ok(cf) => Ok(calculate_xnpv(rate, &cf))
+        Ok(cf) => Ok(calculate_xnpv(rate, &cf)),
     }
 }
 
@@ -31,21 +35,22 @@ pub fn calculate_xnpv<T: TimeZone>(rate: &f64, cf: &CheckedCashflowSchedule<T>) 
         return 0.;
     }
 
-    if *rate == 0. { 
+    if *rate == 0. {
         return cf.values.iter().sum();
     }
 
     let d0 = cf.dates.first().unwrap();
-    cf.values.iter()
-    .zip(cf.dates.iter())
-    .map(|(v, d)| v / f64::powf(1. + rate, utils::days_to(d0.clone(), d.clone()) / 365.))
-    .sum()
+    cf.values
+        .iter()
+        .zip(cf.dates.iter())
+        .map(|(v, d)| v / f64::powf(1. + rate, utils::days_to(d0.clone(), d.clone()) / 365.))
+        .sum()
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::{NaiveDate, DateTime, Utc, Duration};
+    use chrono::{DateTime, Duration, NaiveDate, Utc};
 
     #[test]
     fn xnpv_with_zero_rate() {
@@ -55,11 +60,13 @@ mod tests {
 
         let mut i = 0;
         for d in dates0.iter() {
-            dates[i] = d.checked_add_signed(Duration::weeks(52 * (i as i64))).unwrap();
+            dates[i] = d
+                .checked_add_signed(Duration::weeks(52 * (i as i64)))
+                .unwrap();
             i = i + 1;
         }
 
-        assert_eq!(xnpv(&0., &cf, &dates).unwrap(), cf.iter().sum());        
+        assert_eq!(xnpv(&0., &cf, &dates).unwrap(), cf.iter().sum());
     }
 
     #[test]
@@ -71,8 +78,8 @@ mod tests {
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc), 
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
         ];
-        assert_eq!(xnpv(&0.1, &cf, &dates).unwrap(), -120.9553674519204);        
+        assert_eq!(xnpv(&0.1, &cf, &dates).unwrap(), -120.9553674519204);
     }
 }
