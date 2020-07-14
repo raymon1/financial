@@ -31,7 +31,7 @@ pub fn xnpv<T: TimeZone>(
 }
 
 pub fn calculate_xnpv<T: TimeZone>(rate: &f64, cf: &CheckedCashflowSchedule<T>) -> f64 {
-    if cf.values.len() == 0 {
+    if cf.values.is_empty() {
         return 0.;
     }
 

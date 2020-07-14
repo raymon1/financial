@@ -24,7 +24,7 @@ where
         }
 
         let d0 = dates.first().unwrap();
-        if let Some(_) = dates.iter().position(|d| *d < *d0) {
+        if dates.iter().any(|d| *d < *d0) {
             return Err("First date must be the earliest");
         };
 

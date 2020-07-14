@@ -14,13 +14,13 @@ pub fn fv(
     pv: &Option<f64>,
     pmt_at_begining: &Option<bool>,
 ) -> f64 {
-    let factor = |r| f64::powf(1.0 + r, f64::from(*nper));
+    let factor = |r| f64::powf(1.0 + r, *nper);
 
     let pmt = pmt.unwrap_or_else(|| 0.0);
     let pv = pv.unwrap_or_else(|| 0.0);
 
     if *rate == 0.0 {
-        return -(pv + pmt * nper);
+        -(pv + pmt * nper)
     } else {
         let factor = factor(rate);
         let pmt_at_begining = if pmt_at_begining.unwrap_or_else(|| false) {

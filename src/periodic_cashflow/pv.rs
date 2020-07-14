@@ -19,7 +19,7 @@ pub fn pv(
     let fv = fv.unwrap_or_else(|| 0.);
 
     if *rate == 0.0 {
-        return -(fv + pmt * nper);
+        -(fv + pmt * nper)
     } else {
         let pmt_at_begining = if pmt_at_begining.unwrap_or_else(|| false) {
             1.
