@@ -5,20 +5,20 @@
 /// # Examples
 ///
 /// ```
-/// let fv = financial::fv(&0.1, &5.0, &Some(100.0), &Some(1000.0), &Some(false));
+/// let fv = financial::fv(0.1, 5.0, Some(100.0), Some(1000.0), Some(false));
 /// assert_eq!(fv, -2221.020000000001);
 /// ```
 pub fn pv(
-    rate: &f64,
-    nper: &f64,
-    pmt: &Option<f64>,
-    fv: &Option<f64>,
-    pmt_at_begining: &Option<bool>,
+    rate: f64,
+    nper: f64,
+    pmt: Option<f64>,
+    fv: Option<f64>,
+    pmt_at_begining: Option<bool>,
 ) -> f64 {
     let pmt = pmt.unwrap_or_else(|| 0.);
     let fv = fv.unwrap_or_else(|| 0.);
 
-    if *rate == 0.0 {
+    if rate == 0.0 {
         -(fv + pmt * nper)
     } else {
         let pmt_at_begining = if pmt_at_begining.unwrap_or_else(|| false) {
@@ -26,7 +26,7 @@ pub fn pv(
         } else {
             0.
         };
-        let temp = f64::powf(1. + rate, *nper);
+        let temp = f64::powf(1. + rate, nper);
         let factor = (1. + rate * pmt_at_begining) * (temp - 1.) / rate;
         -(fv + pmt * factor) / temp
     }
@@ -39,7 +39,7 @@ mod tests {
     #[test]
     fn pv_works_when_pmt_at_end_of_period() {
         assert_eq!(
-            pv(&0.1, &5.0, &Some(100.0), &Some(1000.0), &Some(false)),
+            pv(0.1, 5.0, Some(100.0), Some(1000.0), Some(false)),
             -1000.0000000000001
         );
     }
@@ -47,7 +47,7 @@ mod tests {
     #[test]
     fn pv_works_when_pmt_at_beginning() {
         assert_eq!(
-            pv(&0.1, &5.0, &Some(100.0), &Some(1000.0), &Some(true)),
+            pv(0.1, 5.0, Some(100.0), Some(1000.0), Some(true)),
             -1037.90786769408449
         );
     }
@@ -55,13 +55,13 @@ mod tests {
     #[test]
     fn pv_works_with_pmt_only() {
         assert_eq!(
-            pv(&0.1, &5.0, &Some(100.0), &None, &Some(false)),
+            pv(0.1, 5.0, Some(100.0), None, Some(false)),
             -379.07867694084507
         );
     }
 
     #[test]
     fn pv_works_with_zero_rate() {
-        assert_eq!(pv(&0.0, &5.0, &Some(100.0), &Some(1000.0), &None), -1500.0);
+        assert_eq!(pv(0.0, 5.0, Some(100.0), Some(1000.0), None), -1500.0);
     }
 }

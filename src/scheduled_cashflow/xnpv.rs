@@ -16,10 +16,10 @@ use chrono::{offset::TimeZone, DateTime};
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
 /// ];
-/// assert_eq!(financial::xnpv(&0.1, &cf, &dates).unwrap(), -120.9553674519204);    
+/// assert_eq!(financial::xnpv(0.1, &cf, &dates).unwrap(), -120.9553674519204);    
 /// ```
 pub fn xnpv<T: TimeZone>(
-    rate: &f64,
+    rate: f64,
     values: &[f64],
     dates: &[DateTime<T>],
 ) -> Result<f64, &'static str> {
@@ -30,12 +30,12 @@ pub fn xnpv<T: TimeZone>(
     }
 }
 
-pub fn calculate_xnpv<T: TimeZone>(rate: &f64, cf: &CheckedCashflowSchedule<T>) -> f64 {
+pub fn calculate_xnpv<T: TimeZone>(rate: f64, cf: &CheckedCashflowSchedule<T>) -> f64 {
     if cf.values.is_empty() {
         return 0.;
     }
 
-    if *rate == 0. {
+    if rate == 0. {
         return cf.values.iter().sum();
     }
 
@@ -66,7 +66,7 @@ mod tests {
             i = i + 1;
         }
 
-        assert_eq!(xnpv(&0., &cf, &dates).unwrap(), cf.iter().sum());
+        assert_eq!(xnpv(0., &cf, &dates).unwrap(), cf.iter().sum());
     }
 
     #[test]
@@ -80,6 +80,6 @@ mod tests {
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
         ];
-        assert_eq!(xnpv(&0.1, &cf, &dates).unwrap(), -120.9553674519204);
+        assert_eq!(xnpv(0.1, &cf, &dates).unwrap(), -120.9553674519204);
     }
 }

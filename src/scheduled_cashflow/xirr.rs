@@ -29,7 +29,7 @@ pub fn xirr<T: TimeZone>(
     match cf {
         Err(m) => Err(m),
         Ok(cf) => {
-            let f_xnpv = |x: f64| calculate_xnpv(&x, &cf);
+            let f_xnpv = |x: f64| calculate_xnpv(x, &cf);
             match find_root(guess, f_xnpv) {
                 Some(ans) => Ok(ans),
                 None => Err("could't find irr for the values provided"),

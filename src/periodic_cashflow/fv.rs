@@ -4,22 +4,22 @@
 /// # Examples
 ///
 /// ```
-/// let fv = financial::fv(&0.1, &5.0, &Some(100.0), &Some(1000.0), &Some(false));
+/// let fv = financial::fv(0.1, 5.0, Some(100.0), Some(1000.0), Some(false));
 /// assert_eq!(fv, -2221.020000000001);
 /// ```
 pub fn fv(
-    rate: &f64,
-    nper: &f64,
-    pmt: &Option<f64>,
-    pv: &Option<f64>,
-    pmt_at_begining: &Option<bool>,
+    rate: f64,
+    nper: f64,
+    pmt: Option<f64>,
+    pv: Option<f64>,
+    pmt_at_begining: Option<bool>,
 ) -> f64 {
-    let factor = |r| f64::powf(1.0 + r, *nper);
+    let factor = |r| f64::powf(1.0 + r, nper);
 
     let pmt = pmt.unwrap_or_else(|| 0.0);
     let pv = pv.unwrap_or_else(|| 0.0);
 
-    if *rate == 0.0 {
+    if rate == 0.0 {
         -(pv + pmt * nper)
     } else {
         let factor = factor(rate);
@@ -40,7 +40,7 @@ mod tests {
     #[test]
     fn fv_works_when_pmt_at_end_of_period() {
         assert_eq!(
-            fv(&0.1, &5.0, &Some(100.0), &Some(1000.0), &Some(false)),
+            fv(0.1, 5.0, Some(100.0), Some(1000.0), Some(false)),
             -2221.020000000001
         );
     }
@@ -48,7 +48,7 @@ mod tests {
     #[test]
     fn fv_works_when_pmt_at_beginning() {
         assert_eq!(
-            fv(&0.1, &5.0, &Some(100.0), &Some(1000.0), &Some(true)),
+            fv(0.1, 5.0, Some(100.0), Some(1000.0), Some(true)),
             -2282.071000000001
         );
     }
@@ -56,14 +56,14 @@ mod tests {
     #[test]
     fn fv_works_with_pmt_only() {
         assert_eq!(
-            fv(&0.1, &5.0, &Some(100.0), &None, &Some(false)),
+            fv(0.1, 5.0, Some(100.0), None, Some(false)),
             -610.5100000000006
         );
     }
 
     #[test]
     fn fv_works_with_zero_rate() {
-        assert_eq!(fv(&0.0, &5.0, &Some(100.0), &Some(1000.0), &None), -1500.0);
+        assert_eq!(fv(0.0, 5.0, Some(100.0), Some(1000.0), None), -1500.0);
     }
 
     #[test]
@@ -78,7 +78,7 @@ mod tests {
             .iter()
             .zip(pvs.iter())
             .zip(pmt_at_begining.iter())
-            .map(|(rpv, a)| fv(&rpv.0, &nper, &pmt, &rpv.1, &a))
+            .map(|(rpv, a)| fv(*rpv.0, nper, pmt, *rpv.1, *a))
             .collect();
 
         assert_eq!(
