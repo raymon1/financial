@@ -5,7 +5,7 @@ use crate::periodic_cashflow::npv::npv;
 ///
 /// # Example
 /// ```
-/// let cf = [-500., 100., 100., 100., 100.];
+/// let cf = [-500., 100., 100., 100., 100., 100.];
 /// let guess = Some(0.);
 /// let cf_irr = financial::irr(&cf, guess);
 /// ```
@@ -30,13 +30,32 @@ mod tests {
     use crate::common::PRECISION;
 
     #[test]
-    fn irr_works() {
+    fn irr_works_different_guess_sign() {
         let cf = [-500., 100., 100., 100., 100.];
         let guess = Some(0.);
         let precision = (irr(&cf, guess).unwrap() - -0.08364541746615000000000000000000).abs();
         assert!(
             precision <= PRECISION,
-            format!("exceeded IRR precision threshold, {}", precision)
+            format!(
+                "IRR of {}, exceeded IRR precision threshold, {}",
+                irr(&cf, guess).unwrap(),
+                precision
+            )
+        );
+    }
+
+    #[test]
+    fn irr_works() {
+        let cf = [-500., 100., 100., 100., 100.];
+        let guess = Some(-0.);
+        let precision = (irr(&cf, guess).unwrap() - -0.08364541746615000000000000000000).abs();
+        assert!(
+            precision <= PRECISION,
+            format!(
+                "exceeded {} IRR precision threshold, {}",
+                irr(&cf, guess).unwrap(),
+                precision
+            )
         );
     }
 

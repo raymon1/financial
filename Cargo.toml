@@ -1,11 +1,11 @@
 [package]
 name = "financial"
-version = "1.0.1"
+version = "1.1.0"
 authors = ["Raymon Mina <raymonmina@gmail.com>"]
 edition = "2018"
 description = "A collection of finance calculations mimicking some of Excel Financial Functions interface"
-keywords = ["finance", "financial", "money", "NPV", "IRR", "present value"]
-categories = ["Mathematics"]
+keywords = ["finance", "financial", "money", "NPV", "IRR"]
+categories = ["mathematics"]
 documentation = "https://docs.rs/financial/"
 homepage = "https://github.com/raymon1/financial"
 repository = "https://github.com/raymon1/financial"
