@@ -44,7 +44,7 @@ mod tests {
     use chrono::{DateTime, NaiveDate, Utc};
 
     #[test]
-    fn xnpv_test() {
+    fn xirr_test() {
         let cf = [-500., 100., 100., 100., 100., 100.];
         let dates = [
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),
@@ -58,7 +58,7 @@ mod tests {
     }
 
     #[test]
-    fn xnpv_test2() {
+    fn xirr_test2() {
         let cf = [-379., 100., 100., 100., 100., 100.];
         let dates = [
             DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),

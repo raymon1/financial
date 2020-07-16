@@ -1,4 +1,3 @@
-// #![feature(test)]
 use crate::common::utils;
 
 /// Calculates the net present value of an investment by using a discount rate and a series of future payments
@@ -23,12 +22,9 @@ pub fn npv(rate: f64, values: &[f64]) -> f64 {
         .sum()
 }
 
-// extern crate test;
-
 #[cfg(test)]
 mod tests {
     use super::*;
-    //    use test::Bencher;
 
     #[test]
     fn npv_with_zero_rate() {
@@ -50,41 +46,4 @@ mod tests {
         let rate = 0.1;
         assert_eq!(npv(rate, &cf), npv_slow(&rate, &cf));
     }
-
-    // commenting benchmarking as it's included in the nightly build only
-    // #[bench]
-    // fn bench_npv_low_count(b: &mut Bencher) {
-    //     let x: [f64; 100] = [100.; 100];
-    //     b.iter(|| npv(&0.1, &x));
-    // }
-
-    // #[bench]
-    // fn bench_npv_slow_low_count(b: &mut Bencher) {
-    //     let x: [f64; 100] = [100.; 100];
-    //     b.iter(|| npv_slow(&0.1, &x));
-    // }
-
-    // #[bench]
-    // fn bench_npv(b: &mut Bencher) {
-    //     let x: [f64; 10000] = [100.; 10000];
-    //     b.iter(|| npv(&0.1, &x));
-    // }
-
-    // #[bench]
-    // fn bench_npv_zero_rate(b: &mut Bencher) {
-    //     let x: [f64; 10000] = [100.; 10000];
-    //     b.iter(|| npv(&0., &x));
-    // }
-
-    // #[bench]
-    // fn bench_npv_slow(b: &mut Bencher) {
-    //     let x: [f64; 10000] = [100.; 10000];
-    //     b.iter(|| npv_slow(&0.1, &x));
-    // }
-
-    // #[bench]
-    // fn bench_npv_slow_zero_rate(b: &mut Bencher) {
-    //     let x: [f64; 10000] = [100.; 10000];
-    //     b.iter(|| npv_slow(&0., &x));
-    // }
 }
