@@ -23,3 +23,18 @@ pub use crate::periodic_cashflow::npv::npv;
 pub use crate::periodic_cashflow::pv::pv;
 pub use crate::scheduled_cashflow::xirr::xirr;
 pub use crate::scheduled_cashflow::xnpv::xnpv;
+
+use std::slice;
+
+#[no_mangle]
+pub extern "C" fn npv2(rate: f64, values: *const f64) -> f64 {
+    let numbers = unsafe { slice::from_raw_parts(values, 4 as usize) };
+
+    npv(rate, numbers)
+}
+
+#[no_mangle]
+pub extern "C" fn add_numbers(number1: i32, number2: i32) -> i32 {
+    println!("Hello from rust!");
+    number1 + number2
+}
