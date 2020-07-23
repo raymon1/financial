@@ -17,18 +17,17 @@ where
     let same_sign = |x: f64, y: f64| {
         x.is_sign_positive() && y.is_sign_positive() || x.is_sign_negative() && y.is_sign_negative()
     };
+
     if newton_val.is_some() && same_sign(newton_val.unwrap(), x) {
         newton_val
     } else {
-        let bounds = find_bounds(x, Bounds::new(), f);
-        println!("newton {}, guess {}", newton_val.unwrap(), x);
-        match bounds {
-            None => None,
-            Some(b) => {
-                println!("bounds.lower {}", b.lower);
-                println!("bounds.upper {}", b.upper);
-                bisection(b, f)
-            }
+        if let Some(b_pos) = find_bounds(x, Bounds::new_positive(), f) {
+            bisection(b_pos, f)
+        } else if let Some(b_neg) = find_bounds(x, Bounds::new_negative(), f) {
+            bisection(b_neg, f)
+        }
+        else {
+            None
         }
     }
 }
@@ -46,7 +45,7 @@ where
 
         let new_x = x - fx / dfx;
 
-        if (new_x - x).abs() <= PRECISION {
+        if (new_x - x).abs() <= PRECISION || fx.abs() <= PRECISION{
             return Some(new_x);
         }
 
@@ -75,7 +74,7 @@ where
                     return None;
                 }
 
-                let mid = a + (b - a) / 2.0;
+                let mid = a + (b - a) / 2.;
                 let fmid = f(mid);
 
                 if fmid.abs() < PRECISION {
@@ -142,10 +141,17 @@ struct Bounds {
 }
 
 impl Bounds {
-    fn new() -> Bounds {
+    fn new_positive() -> Bounds {
         Bounds {
-            lower: -1., //f64::MIN,
+            lower: 0.,
             upper: f64::MAX,
+        }
+    }
+
+    fn new_negative() -> Bounds {
+        Bounds {
+            lower: f64::MIN,
+            upper: 0.,
         }
     }
 

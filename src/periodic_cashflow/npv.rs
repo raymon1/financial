@@ -18,7 +18,7 @@ pub fn npv(rate: f64, values: &[f64]) -> f64 {
     utils::powers(1. + rate, values.len(), false)
         .iter()
         .zip(values.iter())
-        .map(|(p, v)| v / *p)
+        .map(|(p, v)| v / p)
         .sum()
 }
 
