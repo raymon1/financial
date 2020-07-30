@@ -14,11 +14,18 @@
 `Financial` is a [Rust](https://www.rust-lang.org/) crate that contains collection of finance calculations mimicking some of [Excel Financial Functions](https://support.microsoft.com/en-us/office/financial-functions-reference-5658d81e-6035-4f24-89c1-fbf124c2b1d8) interface.
 you can find the crate [here](https://docs.rs/crate/financial)
 
-## What is different than other financial crates?
+## Usage
+
+    use financial;
+
+    let npv = financial::npv(0.1, &[-1000., 500., 500., 500.]);
+    assert_eq!(npv, 221.29635953828267);
+
+## What makes this crate different
 
 It supports both periodic and scheduled computation for [IRR](https://en.wikipedia.org/wiki/Internal_rate_of_return) and [NPV](https://en.wikipedia.org/wiki/Net_present_value).
 
-IRR and NPV functions should be faster since powers are pre-computed iteratively instead of using power function multiple times.
+IRR and NPV functions are faster since powers are pre-computed iteratively instead of using power function multiple times. Take this with a grain of salt since no benches tests are offered at the moment.
 
 ## Supported Functions
 
@@ -31,5 +38,18 @@ IRR and NPV functions should be faster since powers are pre-computed iteratively
 
 ## Future Work
 
-- Add More Functions
-- Add bench tests
+- ~~Add bench tests~~
+- Add More Functions (NPER, PMT, MIRR, Rate, effect)
+
+## Testing
+
+- This crate has over 180 test case, most of them are compared to Excel outputs.
+- XIRR is not compared against Excel, since Excel XIRR doesn't always converge to the correct answer and often produce the wrong answer of 0.000000002980.
+Instead XIRR are tested by using the XIRR to produce a zero XNPV value.
+- Note that the precision used for equality of floating points is 1e-7
+
+## Contribution
+
+- The biggest contribution is using the crate and providing feedback or pointing out any issues.
+- Adding more test cases is encouraged.
+- Any contribution that serves the crate is welcome.
