@@ -20,15 +20,12 @@ where
 
     if newton_val.is_some() && same_sign(newton_val.unwrap(), x) {
         newton_val
+    } else if let Some(b_pos) = find_bounds(x, Bounds::new_positive(), f) {
+        bisection(b_pos, f)
+    } else if let Some(b_neg) = find_bounds(x, Bounds::new_negative(), f) {
+        bisection(b_neg, f)
     } else {
-        if let Some(b_pos) = find_bounds(x, Bounds::new_positive(), f) {
-            bisection(b_pos, f)
-        } else if let Some(b_neg) = find_bounds(x, Bounds::new_negative(), f) {
-            bisection(b_neg, f)
-        }
-        else {
-            None
-        }
+        None
     }
 }
 
@@ -45,7 +42,7 @@ where
 
         let new_x = x - fx / dfx;
 
-        if (new_x - x).abs() <= PRECISION || fx.abs() <= PRECISION{
+        if (new_x - x).abs() <= PRECISION || fx.abs() <= PRECISION {
             return Some(new_x);
         }
 
