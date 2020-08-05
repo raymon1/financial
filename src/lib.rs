@@ -16,10 +16,11 @@
 //! - XNPV(Rate), values, dates)
 //! - IRR(values)
 //! - XIRR(values, dates)
+//! - MIRR(values, finance_rate, reinvest_rate)
 //!
 //! ## Future Work
 //!
-//! - Add More Functions (NPER, PMT, MIRR, Rate, effect)
+//! - Add More Functions (NPER, PMT, Rate, effect)
 //!
 //! ## Testing
 //!
@@ -30,7 +31,7 @@
 //!
 //! ## Contribution
 //!
-//! - The biggest contribution is using the crate and providing feedback or pointing out any issues.
+//! - Using the crate and providing feedback or pointing out any issues.
 //! - Adding more test cases is encouraged.
 //! - Any contribution that serves the crate is welcome.
 //!
@@ -43,6 +44,7 @@ mod scheduled_cashflow;
 
 pub use crate::periodic_cashflow::fv::fv;
 pub use crate::periodic_cashflow::irr::irr;
+pub use crate::periodic_cashflow::mirr::mirr;
 pub use crate::periodic_cashflow::npv::npv;
 pub use crate::periodic_cashflow::pv::pv;
 pub use crate::scheduled_cashflow::xirr::xirr;

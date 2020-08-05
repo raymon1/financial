@@ -34,6 +34,13 @@ fn bench_irr(c: &mut Criterion) {
     });
 }
 
+fn bench_mirr(c: &mut Criterion) {
+    let cf = [-500., 100., 100., 100., 100., 100.];
+    c.bench_function("bench_mirr", |b| {
+        b.iter(|| financial::mirr(&cf, 0.1, 0.1));
+    });
+}
+
 fn bench_xnpv(c: &mut Criterion) {
     let cf = [-500., 100., 100., 100., 100., 100.];
     let dates = [
@@ -70,6 +77,7 @@ criterion_group!(
     bench_npv_10000_value,
     bench_npv_10000_value_zero_rate,
     bench_irr,
+    bench_mirr,
     bench_xnpv,
     bench_xirr
 );

@@ -35,11 +35,12 @@ IRR and NPV functions are faster since powers are pre-computed iteratively inste
 - XNPV(Rate), values, dates)
 - IRR(values)
 - XIRR(values, dates)
+- MIRR(values, finance_rate, reinvest_rate)
 
 ## Future Work
 
 - ~~Add bench tests~~
-- Add More Functions (NPER, PMT, MIRR, Rate, effect)
+- Add More Functions (NPER, PMT, Rate, effect)
 
 ## Testing
 
@@ -50,6 +51,6 @@ Instead XIRR are tested by using the XIRR to produce a zero XNPV value.
 
 ## Contribution
 
-- The biggest contribution is using the crate and providing feedback or pointing out any issues.
+- Using the crate and providing feedback or pointing out any issues.
 - Adding more test cases is encouraged.
 - Any contribution that serves the crate is welcome.

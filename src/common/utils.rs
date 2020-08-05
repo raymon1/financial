@@ -13,9 +13,16 @@ pub fn trim_zeros(values: &[f64]) -> &[f64] {
 
     let begin = values.iter().position(not_zero).unwrap_or(0);
 
-    let end = values.len() - values.iter().rev().position(not_zero).unwrap_or(1);
-
+    let end = values.iter().rposition(not_zero).unwrap_or(values.len() - 1) + 1;
     &values[begin..end]
+}
+
+pub fn trim_end_zeros(values: &[f64]) -> &[f64] {
+    let not_zero = |x: &f64| *x != 0.;
+
+    let end = values.iter().rposition(not_zero).unwrap_or(values.len() - 1) + 1;
+
+    &values[0..end]
 }
 
 use chrono::{offset::TimeZone, DateTime};

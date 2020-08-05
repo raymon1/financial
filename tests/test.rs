@@ -57,6 +57,35 @@ mod tests {
     }
 
     #[test]
+    fn mirr() {
+        test_fn("./tests/test_data/mirr.csv", |test_case, case_index| {
+            let mut test_case = test_case;
+            let parse_next_f64_or = |x : Option<&str>| x.unwrap().parse::<f64>().unwrap_or_else(|_| f64::NAN); 
+            let (ans, finance_rate, reinvest_rate, values): (f64, f64, f64, Vec<f64>) = (
+                parse_next_f64_or(test_case.next()),
+                parse_next_f64_or(test_case.next()),
+                parse_next_f64_or(test_case.next()),
+                test_case.map(|x| x.parse::<f64>().unwrap()).collect(),
+            );
+
+            let res = financial::mirr(&values, finance_rate, reinvest_rate);
+
+            if ans.is_finite() {
+                assert!(
+                    (ans - res).abs() < PRECISION,
+                    "case {}: answer is {}, result is {}",
+                    case_index,
+                    ans,
+                    res
+                );
+            }
+            else {
+                assert_eq!(res.is_infinite(), true);
+            }
+        });
+    }
+
+    #[test]
     fn xnpv() {
         test_fn("./tests/test_data/xnpv.csv", |test_case, case_index| {
             let mut test_case = test_case;
