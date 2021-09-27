@@ -4,7 +4,7 @@ const NEWTON_MAX_ITERATION: u32 = 20;
 const BISECTION_MAX_ITERATION: u32 = 2000;
 const INITIAL_GUESS: f64 = 0.;
 
-pub fn find_root<F>(x: Option<f64>, func: F) -> Option<f64>
+pub fn find_root<F>(x: Option<f64>, func: F, bounds_search_expansion_factor: f64) -> Option<f64>
 where
     F: Fn(f64) -> f64,
 {
@@ -20,9 +20,9 @@ where
 
     if newton_val.is_some() && same_sign(newton_val.unwrap(), x) {
         newton_val
-    } else if let Some(b_pos) = find_bounds(x, Bounds::new_positive(), f) {
+    } else if let Some(b_pos) = find_bounds(x, Bounds::new_positive(), f, bounds_search_expansion_factor) {
         bisection(b_pos, f)
-    } else if let Some(b_neg) = find_bounds(x, Bounds::new_negative(), f) {
+    } else if let Some(b_neg) = find_bounds(x, Bounds::new_negative(), f, bounds_search_expansion_factor) {
         bisection(b_neg, f)
     } else {
         None
@@ -93,12 +93,11 @@ where
     None
 }
 
-fn find_bounds<F>(x: f64, bounds: Bounds, f: F) -> Option<Bounds>
+fn find_bounds<F>(x: f64, bounds: Bounds, f: F, expansion_factor: f64) -> Option<Bounds>
 where
     F: Fn(f64) -> f64,
 {
     let shift = 0.01;
-    let factor = 1.6;
     let adjust_to_min = |val| {
         if val <= bounds.lower {
             bounds.lower + PRECISION
@@ -123,8 +122,8 @@ where
         if product <= 0. {
             return Some(Bounds::new_from_range(lower, upper));
         } else {
-            low = lower + factor * (lower - upper);
-            upp = upper + factor * (upper - lower);
+            low = lower + expansion_factor * (lower - upper);
+            upp = upper + expansion_factor * (upper - lower);
             continue;
         }
     }
@@ -132,6 +131,7 @@ where
     None
 }
 
+#[derive(Debug)]
 struct Bounds {
     lower: f64,
     upper: f64,

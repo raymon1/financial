@@ -17,7 +17,7 @@ use chrono::{DateTime, TimeZone};
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
 ///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
 /// ];
-/// assert!((financial::xirr(&cf, &dates, None).unwrap() - 0.10004608364).abs() < 1e-7);  
+/// assert!((financial::xirr(&cf, &dates, None).unwrap() - 0.10004608364).abs() < 1e-7);
 /// ```
 pub fn xirr<T: TimeZone>(
     values: &[f64],
@@ -30,7 +30,7 @@ pub fn xirr<T: TimeZone>(
         Err(m) => Err(m),
         Ok(cf) => {
             let f_xnpv = |x: f64| calculate_xnpv(x, &cf);
-            match find_root(guess, f_xnpv) {
+            match find_root(guess, f_xnpv, 1.1) {
                 Some(ans) => Ok(ans),
                 None => Err("could't find irr for the values provided"),
             }
