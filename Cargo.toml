@@ -1,6 +1,6 @@
 [package]
 name = "financial"
-version = "1.1.2"
+version = "1.1.3"
 authors = ["Raymon Mina <raymonmina@gmail.com>"]
 edition = "2018"
 description = "A collection of finance calculations mimicking some of Excel Financial Functions interface"
