@@ -32,10 +32,14 @@ IRR and NPV functions are faster since powers are pre-computed iteratively inste
 - FV(Rate, Nper, Pmt, Pv, Pmt_is_due)
 - PV(Rate, Nper, Pmt, Fv, Pmt_is_due)
 - NPV(Rate, values)
-- XNPV(Rate), values, dates)
+- XNPV(Rate, values, dates)
 - IRR(values)
 - XIRR(values, dates)
 - MIRR(values, finance_rate, reinvest_rate)
+
+## NaiveDate Interface
+
+- `financial::naive_date::xirr()` and `financial::naive_date::xnpv()` provide same functionalities as `financial::xirr()` and `financial::xnpv()`, except that the former supports `NaiveDate` as the input date type while the latter uses `DateTime<T>`.
 
 ## Future Work
 
