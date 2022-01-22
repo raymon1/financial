@@ -39,6 +39,7 @@
 //!
 
 mod common;
+pub mod naive_date;
 mod periodic_cashflow;
 mod scheduled_cashflow;
 
