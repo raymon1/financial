@@ -44,11 +44,9 @@ mod tests {
         let precision = (irr(&cf, guess).unwrap() - -0.08364541746615000000000000000000).abs();
         assert!(
             precision <= PRECISION,
-            format!(
-                "IRR of {}, exceeded IRR precision threshold, {}",
-                irr(&cf, guess).unwrap(),
-                precision
-            )
+            "IRR of {}, exceeded IRR precision threshold, {}",
+            irr(&cf, guess).unwrap(),
+            precision
         );
     }
 
@@ -59,11 +57,9 @@ mod tests {
         let precision = (irr(&cf, guess).unwrap() - -0.08364541746615000000000000000000).abs();
         assert!(
             precision <= PRECISION,
-            format!(
-                "exceeded {} IRR precision threshold, {}",
-                irr(&cf, guess).unwrap(),
-                precision
-            )
+            "exceeded {} IRR precision threshold, {}",
+            irr(&cf, guess).unwrap(),
+            precision
         );
     }
 
