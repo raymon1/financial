@@ -3,7 +3,7 @@ use chrono::{DateTime, NaiveDate, Utc};
 fn to_datetime(dates: &[NaiveDate]) -> Vec<DateTime<Utc>> {
     dates
         .iter()
-        .map(|date| DateTime::<Utc>::from_utc(date.and_hms(0, 0, 0), Utc))
+        .map(|date| DateTime::<Utc>::from_utc(date.and_hms_opt(0, 0, 0).unwrap(), Utc))
         .collect::<Vec<DateTime<Utc>>>()
 }
 
