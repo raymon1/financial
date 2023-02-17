@@ -9,12 +9,12 @@ use chrono::{offset::TimeZone, DateTime};
 /// use chrono::{NaiveDate, DateTime, Utc, Duration};
 /// let cf = [-500., 100., 100., 100., 100., 100.];
 /// let dates = [
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
 /// ];
 /// assert_eq!(financial::xnpv(0.1, &cf, &dates).unwrap(), -120.9553674519204);    
 /// ```
@@ -73,12 +73,12 @@ mod tests {
     fn xnpv_test() {
         let cf = [-500., 100., 100., 100., 100., 100.];
         let dates = [
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
         ];
         assert_eq!(xnpv(0.1, &cf, &dates).unwrap(), -120.9553674519204);
     }

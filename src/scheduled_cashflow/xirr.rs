@@ -10,12 +10,12 @@ use chrono::{DateTime, TimeZone};
 /// use chrono::{NaiveDate, DateTime, Utc};
 /// let cf = [-379., 100., 100., 100., 100., 100.];
 /// let dates = [
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+///     DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
 /// ];
 /// assert!((financial::xirr(&cf, &dates, None).unwrap() - 0.10004608364).abs() < 1e-7);
 /// ```
@@ -47,12 +47,12 @@ mod tests {
     fn xirr_test() {
         let cf = [-500., 100., 100., 100., 100., 100.];
         let dates = [
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
         ];
         assert_eq!(xirr(&cf, &dates, None).unwrap(), 0.);
     }
@@ -61,12 +61,12 @@ mod tests {
     fn xirr_test2() {
         let cf = [-379., 100., 100., 100., 100., 100.];
         let dates = [
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms(0, 0, 0), Utc),
-            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms(0, 0, 0), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2016, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2017, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2018, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2019, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2020, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
+            DateTime::<Utc>::from_utc(NaiveDate::from_ymd(2021, 7, 8).and_hms_opt(0, 0, 0).unwrap(), Utc),
         ];
         assert!(
             (xirr(&cf, &dates, None).unwrap() - 0.10004608364551086) < crate::common::PRECISION

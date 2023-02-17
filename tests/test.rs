@@ -94,7 +94,8 @@ mod tests {
                 DateTime::<Utc>::from_utc(
                     NaiveDate::parse_from_str(x, "%m/%d/%Y")
                         .unwrap()
-                        .and_hms(0, 0, 0),
+                        .and_hms_opt(0, 0, 0)
+                        .unwrap(),
                     Utc,
                 )
             };
@@ -130,7 +131,8 @@ mod tests {
                 DateTime::<Utc>::from_utc(
                     NaiveDate::parse_from_str(x, "%m/%d/%Y")
                         .unwrap()
-                        .and_hms(12, 0, 0),
+                        .and_hms_opt(12, 0, 0)
+                        .unwrap(),
                     Utc,
                 )
             };
