@@ -5,8 +5,8 @@
 /// # Examples
 ///
 /// ```
-/// let fv = financial::fv(0.1, 5.0, Some(100.0), Some(1000.0), Some(false));
-/// assert_eq!(fv, -2221.020000000001);
+/// let pv = financial::pv(0.2, 48.0, Some(100.0), Some(1000.0), Some(false));
+/// assert_eq!(pv, -500.0791170697643);
 /// ```
 pub fn pv(
     rate: f64,
